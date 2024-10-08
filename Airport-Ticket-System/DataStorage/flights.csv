@@ -1,0 +1,6 @@
+FlightId;DepartureCountry;DestinationCountry;DepartureDate;DepartureAirport;ArrivalAirport;Price
+FL001;USA;UK;10/11/2024 6:24:30 PM;JFK;Heathrow;400.00
+FL002;Germany;France;10/14/2024 12:00:00 AM;Berlin;Charles de Gaulle;450.00
+FL003;Canada;Australia;10/18/2024 12:00:00 AM;Toronto;Sydney;1200.00
+FL004;Japan;South Korea;10/25/2024 12:00:00 AM;Tokyo;Seoul;400.00
+FL005;Brazil;Argentina;10/9/2024 12:00:00 AM;Sao Paulo;Buenos Aires;500.00

@@ -1,0 +1,6 @@
+PassengerId;FirstName;LastName;Email;PhoneNumber
+P001;John;Doe;john.doe@example.com;123-456-7890
+P002;Jane;Smith;jane.smith@example.com;098-765-4321
+P003;Alice;Johnson;alice.johnson@example.com;555-123-4567
+P004;Bob;Brown;bob.brown@example.com;444-987-6543
+P005;Charlie;Davis;charlie.davis@example.com;777-111-2222
