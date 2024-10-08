@@ -7,7 +7,7 @@
 ### Passenger Features
 - **Book a Flight:** Passengers can book flights by selecting from various search parameters and choosing from different flight classes (Economy, Business, First Class).
 - **Search Flights:** Passengers can search for available flights based on various criteria such as price, departure country, destination country, and more.
-- **Manage Bookings:** Passengers can view, modify, and cancel their bookings.
+- **Manage Bookings:** Passengers can view, modify, and cancel their bookings..
 
 ### Manager Features
 - **Import Flights:** Managers can import a list of flights from a CSV file, with validations to ensure data integrity.
