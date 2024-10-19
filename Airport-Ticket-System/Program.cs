@@ -9,10 +9,25 @@ class Program
         var services = ServiceFactory.CreateServices();
         var passengerServiceHelper = new PassengerServiceHelper();
         var passenger = passengerServiceHelper.GetPassengerInfo();
-        if (passenger.FirstName.Equals("Admin"))
+        var configManager = new ConfigManager();
+        var (adminName, adminPassword) = configManager.GetAdminCredentials();
+        bool isAdmin = passenger.FirstName.Equals(adminName) ? true : false;
+        if (isAdmin)
         {
-            var manager = new ManagerMainMenu();
-            manager.ManagerMenu();
+            while (true)
+            {
+                Console.WriteLine("Pls Enter the Password :");
+                var passKey = Console.ReadLine();
+                if (!passKey.Equals(adminPassword))
+                {
+                    continue;
+                }
+                else
+                {
+                    var manager = new ManagerMainMenu();
+                    manager.ManagerMenu();
+                }
+            }
         }
         else
         {
