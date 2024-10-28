@@ -28,3 +28,5 @@
    ```bash
    git clone https://github.com/yourusername/AirportTicketBookingSystem.git
    cd AirportTicketBookingSystem
+
+[![Build and Test](https://github.com/RasheedHendawi/Airport-Ticket-Booking-System/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/RasheedHendawi/Airport-Ticket-Booking-System/actions/workflows/build-and-test.yml)
