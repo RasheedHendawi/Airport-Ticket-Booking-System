@@ -1,0 +1,44 @@
+name: Build and Test
+
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**/*.cs'
+      - '**/*.csproj'
+
+env:
+  DOTNET_VERSION: '6.0.401'
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: List files for debugging
+      run: ls -R # Ensure all files are present
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Install Dependencies (Main Project)
+      working-directory: 'Airport-Ticket-System'
+      run: dotnet restore
+
+    - name: Build Project
+      working-directory: 'Airport-Ticket-System'
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run Tests
+      working-directory: 'AirportTicketSystem.Tests'
+      run: dotnet test --no-restore --verbosity normal
