@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\Airport-Ticket-System\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AA7103C2-7ABF-4B34-83B6-710F38523BB8}|Airport-Ticket-System.csproj|c:\\users\\rrash\\desktop\\airport-ticket-booking-system\\airport-ticket-system\\utilites\\displayhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA7103C2-7ABF-4B34-83B6-710F38523BB8}|Airport-Ticket-System.csproj|solutionrelative:utilites\\displayhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AA7103C2-7ABF-4B34-83B6-710F38523BB8}|Airport-Ticket-System.csproj|c:\\users\\rrash\\desktop\\airport-ticket-booking-system\\airport-ticket-system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AA7103C2-7ABF-4B34-83B6-710F38523BB8}|Airport-Ticket-System.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -14,17 +18,38 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "DisplayHelper.cs",
+              "DocumentMoniker": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\Airport-Ticket-System\\Utilites\\DisplayHelper.cs",
+              "RelativeDocumentMoniker": "Utilites\\DisplayHelper.cs",
+              "ToolTip": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\Airport-Ticket-System\\Utilites\\DisplayHelper.cs",
+              "RelativeToolTip": "Utilites\\DisplayHelper.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAwB8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-20T10:44:18.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\Airport-Ticket-System\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\Airport-Ticket-System\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-13T02:38:26.488Z",
               "EditorCaption": ""
