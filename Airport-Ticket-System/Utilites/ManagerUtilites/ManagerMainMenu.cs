@@ -1,18 +1,19 @@
-﻿using Airport_Ticket_System.Interfaces.IServices;
-using Airport_Ticket_System.Repositories;
+﻿using Airport_Ticket_System.Helpers;
+using Airport_Ticket_System.Interfaces.IServices;
+using Airport_Ticket_System.RepositoriesHandler;
 
 namespace Airport_Ticket_System.Utilites.ManagerUtilites
 {
     public class ManagerMainMenu
     {
-        public void ManagerMenu()
+        public static void ManagerMenu()
         {
             bool continueManagerMenu = true;
 
             while (continueManagerMenu)
             {
                 var services = ServiceFactory.CreateServices();
-                Console.Clear();
+                //Console.Clear();
                 Console.WriteLine("Welcome to the Manager Menu!");
                 Console.WriteLine("Please select an option:");
                 Console.WriteLine("1: Import Flights from CSV");
@@ -49,79 +50,99 @@ namespace Airport_Ticket_System.Utilites.ManagerUtilites
             Console.WriteLine("Thank you for using the Manager Menu!");
         }
 
-        private void ImportFlights(IFlightService flightService)
+        private static void ImportFlights(IFlightService flightService)
         {
             Console.WriteLine("Enter the path to the CSV file to import flights:");
             var filePath = Console.ReadLine();
 
             try
             {
-                flightService.ImportFlightsFromCsv(filePath);
+                if (filePath != null)
+                {
+                    flightService.ImportFlightsFromCsv(filePath);
+                }
+                else
+                {
+                    throw new Exception("Empty file path");
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while importing flights: {ex.Message}");
             }
         }
-        private void SearchForBooking(IBookingService bookingService)
+        private static void SearchForBooking(IBookingService bookingService)
         {
-            var bookingRepo = new BookingRepository();
-            bookingService.PrintBookings(bookingRepo.GetAllBookings());
-            Console.WriteLine("Do you want to filter the results? (yes/no)");
-            var result = Console.ReadLine().ToLower();
-
-            if (result == "yes")
+            try
             {
-                Console.WriteLine("Enter Flight ID (leave blank to skip):");
-                var flightId = Console.ReadLine();
+                var bookingRepo = new BookingRepository("bookings.csv");
+                bookingService.PrintBookings(bookingRepo.GetAllBookings());
 
-                Console.WriteLine("Enter Departure Country (leave blank to skip):");
-                var departureCountry = Console.ReadLine();
-
-                Console.WriteLine("Enter Destination Country (leave blank to skip):");
-                var destinationCountry = Console.ReadLine();
-
-                Console.WriteLine("Enter Departure Date (yyyy-mm-dd, leave blank to skip):");
-                var departureDateInput = Console.ReadLine();
-                DateTime? departureDate = null;
-                if (DateTime.TryParse(departureDateInput, out var parsedDate))
+                Console.WriteLine("Do you want to filter the results? (yes/no)");
+                var result = Console.ReadLine();
+                if (result == null) result = "no";
+                else 
                 {
-                    departureDate = parsedDate;
+                    result=result.ToLower();
                 }
-
-                Console.WriteLine("Enter Departure Airport (leave blank to skip):");
-                var departureAirport = Console.ReadLine();
-
-                Console.WriteLine("Enter Arrival Airport (leave blank to skip):");
-                var arrivalAirport = Console.ReadLine();
-
-                Console.WriteLine("Enter Maximum Price (leave blank to skip):");
-                var maxPriceInput = Console.ReadLine();
-                decimal? maxPrice = null;
-                if (decimal.TryParse(maxPriceInput, out var parsedPrice))
+                if (result == "yes")
                 {
-                    maxPrice = parsedPrice;
+                    Console.WriteLine("Enter Flight ID (leave blank to skip):");
+                    var flightId = Console.ReadLine();
+
+                    Console.WriteLine("Enter Departure Country (leave blank to skip):");
+                    var departureCountry = Console.ReadLine();
+
+                    Console.WriteLine("Enter Destination Country (leave blank to skip):");
+                    var destinationCountry = Console.ReadLine();
+
+                    Console.WriteLine("Enter Departure Date (yyyy-mm-dd, leave blank to skip):");
+                    var departureDateInput = Console.ReadLine();
+                    DateTime? departureDate = null;
+                    if (DateTime.TryParse(departureDateInput, out var parsedDate))
+                    {
+                        departureDate = parsedDate;
+                    }
+
+                    Console.WriteLine("Enter Departure Airport (leave blank to skip):");
+                    var departureAirport = Console.ReadLine();
+
+                    Console.WriteLine("Enter Arrival Airport (leave blank to skip):");
+                    var arrivalAirport = Console.ReadLine();
+
+                    Console.WriteLine("Enter Maximum Price (leave blank to skip):");
+                    var maxPriceInput = Console.ReadLine();
+                    decimal? maxPrice = null;
+                    if (decimal.TryParse(maxPriceInput, out var parsedPrice))
+                    {
+                        maxPrice = parsedPrice;
+                    }
+
+                    Console.WriteLine("Enter Passenger ID (leave blank to skip):");
+                    var passengerId = Console.ReadLine();
+
+                    Console.WriteLine("Enter Flight Class (Economy, Business, FirstClass, leave blank to skip):");
+                    var flightClass = Console.ReadLine();
+
+                    var filteredBookings = bookingService.FilterBookings(
+                        flightId,
+                        maxPrice,
+                        departureCountry,
+                        destinationCountry,
+                        departureDate,
+                        departureAirport,
+                        arrivalAirport,
+                        passengerId,
+                        flightClass
+                    );
+                    bookingService.PrintBookings(filteredBookings);
                 }
-
-                Console.WriteLine("Enter Passenger ID (leave blank to skip):");
-                var passengerId = Console.ReadLine();
-
-                Console.WriteLine("Enter Flight Class (Economy, Business, FirstClass, leave blank to skip):");
-                var flightClass = Console.ReadLine();
-
-                var filteredBookings = bookingService.FilterBookings(
-                    flightId,
-                    maxPrice,
-                    departureCountry,
-                    destinationCountry,
-                    departureDate,
-                    departureAirport,
-                    arrivalAirport,
-                    passengerId,
-                    flightClass
-                );
-                bookingService.PrintBookings(filteredBookings);
             }
+            catch (Exception ex) 
+            { 
+                Console.WriteLine($"Error happend when answering yes/no{ex.Message}");
+            }
+
         }
 
 

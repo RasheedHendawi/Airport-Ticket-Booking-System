@@ -3,7 +3,7 @@ using Airport_Ticket_System.Helpers;
 using Airport_Ticket_System.Interfaces.IRepositories;
 using Airport_Ticket_System.Interfaces.IServices;
 using Airport_Ticket_System.Models;
-using Airport_Ticket_System.Repositories;
+using Airport_Ticket_System.RepositoriesHandler;
 
 namespace Airport_Ticket_System.Services
 {
@@ -18,9 +18,10 @@ namespace Airport_Ticket_System.Services
             _bookingRepository = bookingRepository;
         }
 
+
         public static Passenger GenaratePassenger(string firstName, string lastName, string email, string phoneNumber)
         {
-            var passengerRepository = new PassengerRepository();
+            var passengerRepository = new PassengerRepository("passengers.csv");
 
             Passenger passenger = new()
             {
@@ -121,7 +122,7 @@ namespace Airport_Ticket_System.Services
             if (booking == null || booking.PassengerId != passengerId)
                 throw new ArgumentException("Booking not found or you don't have permission to modify this booking.");
 
-            if(_flightRepository.GetFlightById(flightId)==null)
+            if (_flightRepository.GetFlightById(flightId) == null)
                 throw new FlightNotFoundException(flightId);
 
             booking.Class = newClass;

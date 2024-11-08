@@ -18,14 +18,14 @@ namespace Airport_Ticket_System.Services
             _flightRepository = flightRepository;
         }
 
-        public void BookFlight(string passengerId, string flightId,FlightClass flightClass)
+        public void BookFlight(string passengerId, string flightId, FlightClass flightClass)
         {
             var flight = _flightRepository.GetFlightById(flightId);
             if (flight == null)
             {
                 throw new FlightNotFoundException(flightId);
             }
-            
+
             var booking = new Booking
             {
                 BookingId = Guid.NewGuid().ToString(),
@@ -33,7 +33,7 @@ namespace Airport_Ticket_System.Services
                 FlightId = flightId,
                 BookingDate = DateTime.Now,
                 Class = flightClass,
-                Price = FlightClassHelper.GetFlightPrice(flight.Price,flightClass)
+                Price = FlightClassHelper.GetFlightPrice(flight.Price, flightClass)
             };
 
             _bookingRepository.AddBooking(booking);
@@ -44,7 +44,6 @@ namespace Airport_Ticket_System.Services
             return _bookingRepository.GetBookingByPassengerId(passengerId);
         }
 
-
         public void ModifyBooking(string bookingId, string newFlightId, FlightClass flightClass)
         {
             var booking = _bookingRepository.GetBookingById(bookingId);
@@ -53,12 +52,20 @@ namespace Airport_Ticket_System.Services
             {
                 throw new BookingNotFoundException(bookingId);
             }
+
+            var newFlight = _flightRepository.GetFlightById(newFlightId);
+            if (newFlight == null)
+            {
+                throw new FlightNotFoundException(newFlightId);
+            }
+
             booking.Class = flightClass;
-            booking.Price = FlightClassHelper.GetFlightPrice(booking.Price, flightClass);
+            booking.Price = FlightClassHelper.GetFlightPrice(newFlight.Price, flightClass);
             booking.FlightId = newFlightId;
             booking.BookingDate = DateTime.Now;
             _bookingRepository.UpdateBooking(booking);
         }
+
         public void CancelBooking(string bookingId)
         {
             var booking = _bookingRepository.GetBookingById(bookingId);
@@ -112,13 +119,14 @@ namespace Airport_Ticket_System.Services
             {
                 if (Enum.TryParse<FlightClass>(flightClass, true, out var parsedFlightClass))
                 {
-                    bookings = bookings.Where(f => f.Class == parsedFlightClass);
+                    bookings = bookings.Where(b => b.Class == parsedFlightClass);
                 }
                 else
                 {
                     Console.WriteLine($"Invalid flight class: {flightClass}. Please provide a valid value (Economy, Business, FirstClass).");
                 }
             }
+
             var filteredFlightIds = flights.Select(f => f.FlightId).ToHashSet();
             bookings = bookings.Where(b => filteredFlightIds.Contains(b.FlightId));
 
@@ -148,9 +156,5 @@ namespace Airport_Ticket_System.Services
 
             Console.WriteLine($"Total Bookings: {bookings.Count()}");
         }
-
-
     }
-
-
 }

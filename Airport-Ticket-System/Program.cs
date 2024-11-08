@@ -1,71 +1,100 @@
 ﻿using Airport_Ticket_System.Helpers;
+using Airport_Ticket_System.Interfaces.IServices;
+using Airport_Ticket_System.Models;
 using Airport_Ticket_System.Utilites;
 using Airport_Ticket_System.Utilites.ManagerUtilites;
+
 class Program
 {
     static void Main(string[] args)
     {
-        DisplayHelper.DisplayHeader();
-        var services = ServiceFactory.CreateServices();
-        var passengerServiceHelper = new PassengerServiceHelper();
-        var passenger = passengerServiceHelper.GetPassengerInfo();
-        var configManager = new ConfigManager();
-        var (adminName, adminPassword) = configManager.GetAdminCredentials();
-        bool isAdmin = passenger.FirstName.Equals(adminName) ? true : false;
-        if (isAdmin)
+        try
         {
-            while (true)
+            DisplayHelper.DisplayHeader();
+            var services = ServiceFactory.CreateServices();
+            var passenger = PassengerServiceHelper.GetPassengerInfo();
+
+            var configManager = new ConfigManager();
+            var (adminName, adminPassword) = configManager.GetAdminCredentials();
+
+            if (IsAdminUser(passenger, adminName))
             {
-                Console.WriteLine("Pls Enter the Password :");
-                var passKey = Console.ReadLine();
-                if (!passKey.Equals(adminPassword))
-                {
-                    continue;
-                }
-                else
-                {
-                    var manager = new ManagerMainMenu();
-                    manager.ManagerMenu();
-                }
+                HandleAdminFlow(adminPassword);
             }
+            else
+            {
+                HandlePassengerFlow(services, passenger);
+            }
+
+            Console.WriteLine("Thank you for using the Airport Ticket Booking System!");
         }
-        else
+        catch (Exception ex)
         {
-            bool continueApp = true;
-            while (continueApp)
-            {
-                DisplayHelper.DisplayMainMenu();
-                var option = Console.ReadLine();
-
-                switch (option)
-                {
-                    case "1":
-                        passengerServiceHelper.BookFlight(services.PassengerService, passenger);
-                        break;
-
-                    case "2":
-                        passengerServiceHelper.SearchForFlights(services.PassengerService);
-                        break;
-
-                    case "3":
-                        passengerServiceHelper.ManageBookings(services.PassengerService, passenger);
-                        break;
-
-                    case "4":
-                        continueApp = false;
-                        break;
-
-                    default:
-                        Console.WriteLine("Invalid option. Please try again.");
-                        break;
-                }
-            }
+            Console.WriteLine($"An error occurred: {ex.Message}");
         }
-
-        Console.WriteLine("Thank you for using the Airport Ticket Booking System!");
     }
 
+    private static bool IsAdminUser(Passenger passenger, string adminName)
+    {
+        return string.Equals(passenger.FirstName, adminName, StringComparison.OrdinalIgnoreCase);
+    }
 
+    private static void HandleAdminFlow(string adminPassword)
+    {
+        while (true)
+        {
+            Console.Write("Please enter the admin password (or type 'exit' to quit): ");
+            var passKey = Console.ReadLine();
 
+            if (string.Equals(passKey, "exit", StringComparison.OrdinalIgnoreCase))
+                break;
 
+            if (string.Equals(passKey, adminPassword))
+            {
+
+                ManagerMainMenu.ManagerMenu();
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Incorrect password. Please try again.");
+            }
+        }
+    }
+
+    private static void HandlePassengerFlow(
+        (IPassengerService PassengerService, IFlightService FlightService, IBookingService BookingService) services,
+        Passenger passenger)
+    {
+        bool continueApp = true;
+
+        while (continueApp)
+        {
+            DisplayHelper.DisplayMainMenu();
+            var option = Console.ReadLine();
+
+            switch (option)
+            {
+                case "1":
+                    PassengerServiceHelper.BookFlight(services.PassengerService, passenger);
+                    break;
+
+                case "2":
+                    PassengerServiceHelper.SearchForFlights(services.PassengerService);
+                    break;
+
+                case "3":
+                    PassengerServiceHelper.ManageBookings(services.PassengerService, passenger);
+                    break;
+
+                case "4":
+                    continueApp = false;
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+            }
+        }
+    }
 }

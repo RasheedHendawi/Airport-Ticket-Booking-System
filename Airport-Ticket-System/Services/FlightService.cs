@@ -5,14 +5,10 @@ using Airport_Ticket_System.Models;
 
 namespace Airport_Ticket_System.Services
 {
-    public class FlightService : IFlightService
+    public class FlightService(IFlightRepository flightRepository) : IFlightService
     {
-        private readonly IFlightRepository _flightRepository;
+        private readonly IFlightRepository _flightRepository = flightRepository;
 
-        public FlightService(IFlightRepository flightRepository)
-        {
-            _flightRepository = flightRepository;
-        }
         public void ImportFlightsFromCsv(string filePath)
         {
             var flights = new List<Flight>();
@@ -21,10 +17,11 @@ namespace Airport_Ticket_System.Services
             string atFilePath = $@"{filePath}";
             using (var reader = new StreamReader(atFilePath))
             {
+                reader.ReadLine();
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
-                    var values = line.Split(';');
+                    var values = line!.Split(';');
 
                     var flight = new Flight
                     {

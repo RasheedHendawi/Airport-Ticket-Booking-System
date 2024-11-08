@@ -6,7 +6,7 @@ namespace Airport_Ticket_System.Helpers
 {
     public class PassengerServiceHelper
     {
-        public  Passenger GetPassengerInfo()
+        public static Passenger GetPassengerInfo()
         {
             Console.Write("Enter First Name: ");
             var firstName = Console.ReadLine();
@@ -16,11 +16,22 @@ namespace Airport_Ticket_System.Helpers
             var email = Console.ReadLine();
             Console.Write("Enter Phone Number: ");
             var phoneNumber = Console.ReadLine();
-            return PassengerService.GenaratePassenger(firstName, lastName, email, phoneNumber);
+
+            if (!string.IsNullOrWhiteSpace(firstName) &&
+                !string.IsNullOrWhiteSpace(lastName) &&
+                !string.IsNullOrWhiteSpace(email) &&
+                !string.IsNullOrWhiteSpace(phoneNumber))
+            {
+                return PassengerService.GenaratePassenger(firstName, lastName, email, phoneNumber);
+            }
+            else
+            {
+                throw new ArgumentException("Null or empty input from user");
+            }
         }
 
 
-        public  void BookFlight(IPassengerService passengerService, Passenger passenger)
+        public static void BookFlight(IPassengerService passengerService, Passenger passenger)
         {
             Console.WriteLine("Please enter the flight ID:");
             var flightId = Console.ReadLine();
@@ -30,13 +41,12 @@ namespace Airport_Ticket_System.Helpers
             Console.WriteLine("2 - Business");
             Console.WriteLine("3 - First Class");
 
-            int classOption;
             FlightClass flightClass;
 
             while (true)
             {
                 var input = Console.ReadLine();
-                if (int.TryParse(input, out classOption) && classOption >= 1 && classOption <= 3)
+                if (int.TryParse(input, out int classOption) && classOption >= 1 && classOption <= 3)
                 {
                     flightClass = classOption switch
                     {
@@ -52,74 +62,81 @@ namespace Airport_Ticket_System.Helpers
                     Console.WriteLine("Invalid input. Please enter 1, 2, or 3 for the flight class.");
                 }
             }
-
-            passengerService.BookFlight(passenger.PassengerId, flightId, flightClass);
-            Console.WriteLine("Flight booked successfully!");
-        }
-
-
-        public  void SearchForFlights(IPassengerService passengerService)
-        {
-            passengerService.PrintAllFlights();
-            Console.WriteLine("Do you want to filter the results? (yes/no)");
-            var result = Console.ReadLine().ToLower();
-
-            if (result == "yes")
+            if (flightId != null)
             {
-                Console.WriteLine("Enter Departure Country (leave blank to skip):");
-                var departureCountry = Console.ReadLine();
-
-                Console.WriteLine("Enter Destination Country (leave blank to skip):");
-                var destinationCountry = Console.ReadLine();
-
-                Console.WriteLine("Enter Departure Date (yyyy-mm-dd, leave blank to skip):");
-                var departureDateInput = Console.ReadLine();
-                DateTime? departureDate = null;
-                if (DateTime.TryParse(departureDateInput, out var parsedDate))
-                {
-                    departureDate = parsedDate;
-                }
-
-                Console.WriteLine("Enter Departure Airport (leave blank to skip):");
-                var departureAirport = Console.ReadLine();
-
-                Console.WriteLine("Enter Arrival Airport (leave blank to skip):");
-                var arrivalAirport = Console.ReadLine();
-
-                Console.WriteLine("Enter Maximum Price (leave blank to skip):");
-                var maxPriceInput = Console.ReadLine();
-                decimal? maxPrice = null;
-                if (decimal.TryParse(maxPriceInput, out var parsedPrice))
-                {
-                    maxPrice = parsedPrice;
-                }
-
-                var filteredFlights = passengerService.SearchAvailableFlights(maxPrice, departureCountry, destinationCountry, departureDate, departureAirport, arrivalAirport);
-
-                if (!filteredFlights.Any())
-                {
-                    Console.WriteLine("\nNo flights match the given criteria.");
-                }
-                else
-                {
-                    Console.WriteLine("\nFiltered Flights:");
-                    Console.WriteLine("--------------------------------------------------------");
-                    foreach (var flight in filteredFlights)
-                    {
-                        Console.WriteLine($"Flight ID: {flight.FlightId}");
-                        Console.WriteLine($"Departure Country: {flight.DepartureCountry}");
-                        Console.WriteLine($"Destination Country: {flight.DestinationCountry}");
-                        Console.WriteLine($"Departure Date: {flight.DepartureDate:yyyy-MM-dd}");
-                        Console.WriteLine($"Departure Airport: {flight.DepartureAirport}");
-                        Console.WriteLine($"Arrival Airport: {flight.ArrivalAirport}");
-                        Console.WriteLine($"Price: {flight.Price:C}");
-                        Console.WriteLine("--------------------------------------------------------");
-                    }
-                }
+                passengerService.BookFlight(passenger.PassengerId, flightId, flightClass);
+                Console.WriteLine("Flight booked successfully!");
+            }
+            else
+            {
+                throw new Exception("flight ID null");
             }
         }
 
-        public  void ManageBookings(IPassengerService passengerService, Passenger passenger)
+
+        public static void SearchForFlights(IPassengerService passengerService)
+        {
+            passengerService.PrintAllFlights();
+            Console.WriteLine("Do you want to filter the results? (yes/no)");
+            var result = Console.ReadLine();
+            result ??= "no";
+            result=result.ToLower();
+            if (result == "yes")
+                {
+                    Console.WriteLine("Enter Departure Country (leave blank to skip):");
+                    var departureCountry = Console.ReadLine();
+
+                    Console.WriteLine("Enter Destination Country (leave blank to skip):");
+                    var destinationCountry = Console.ReadLine();
+
+                    Console.WriteLine("Enter Departure Date (yyyy-mm-dd, leave blank to skip):");
+                    var departureDateInput = Console.ReadLine();
+                    DateTime? departureDate = null;
+                    if (DateTime.TryParse(departureDateInput, out var parsedDate))
+                    {
+                        departureDate = parsedDate;
+                    }
+
+                    Console.WriteLine("Enter Departure Airport (leave blank to skip):");
+                    var departureAirport = Console.ReadLine();
+
+                    Console.WriteLine("Enter Arrival Airport (leave blank to skip):");
+                    var arrivalAirport = Console.ReadLine();
+
+                    Console.WriteLine("Enter Maximum Price (leave blank to skip):");
+                    var maxPriceInput = Console.ReadLine();
+                    decimal? maxPrice = null;
+                    if (decimal.TryParse(maxPriceInput, out var parsedPrice))
+                    {
+                        maxPrice = parsedPrice;
+                    }
+
+                    var filteredFlights = passengerService.SearchAvailableFlights(maxPrice, departureCountry, destinationCountry, departureDate, departureAirport, arrivalAirport);
+
+                    if (!filteredFlights.Any())
+                    {
+                        Console.WriteLine("\nNo flights match the given criteria.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nFiltered Flights:");
+                        Console.WriteLine("--------------------------------------------------------");
+                        foreach (var flight in filteredFlights)
+                        {
+                            Console.WriteLine($"Flight ID: {flight.FlightId}");
+                            Console.WriteLine($"Departure Country: {flight.DepartureCountry}");
+                            Console.WriteLine($"Destination Country: {flight.DestinationCountry}");
+                            Console.WriteLine($"Departure Date: {flight.DepartureDate:yyyy-MM-dd}");
+                            Console.WriteLine($"Departure Airport: {flight.DepartureAirport}");
+                            Console.WriteLine($"Arrival Airport: {flight.ArrivalAirport}");
+                            Console.WriteLine($"Price: {flight.Price:C}");
+                            Console.WriteLine("--------------------------------------------------------");
+                        }
+                    }
+                }
+        }
+
+        public static void ManageBookings(IPassengerService passengerService, Passenger passenger)
         {
             while (true)
             {
@@ -152,7 +169,7 @@ namespace Airport_Ticket_System.Helpers
             }
         }
 
-        public  void ViewBookings(IPassengerService passengerService, string passengerId)
+        public static void ViewBookings(IPassengerService passengerService, string passengerId)
         {
             var bookings = passengerService.ViewBookings(passengerId);
             if (!bookings.Any())
@@ -174,14 +191,21 @@ namespace Airport_Ticket_System.Helpers
             }
         }
 
-        public  void CancelBooking(IPassengerService passengerService, string passengerId)
+        public static void CancelBooking(IPassengerService passengerService, string passengerId)
         {
             Console.Write("Enter the Booking ID you want to cancel: ");
             var bookingId = Console.ReadLine();
 
             try
             {
-                passengerService.CancelBooking(passengerId, bookingId);
+                if (passengerId != null && bookingId != null)
+                {
+                    passengerService.CancelBooking(passengerId, bookingId);
+                }
+                else 
+                {
+                    throw new Exception("PassegnerServicehelper null inputs");
+                }
             }
             catch (Exception ex)
             {
@@ -189,7 +213,7 @@ namespace Airport_Ticket_System.Helpers
             }
         }
 
-        public  void ModifyBooking(IPassengerService passengerService, string passengerId)
+        public static void ModifyBooking(IPassengerService passengerService, string passengerId)
         {
             Console.Write("Enter the Booking ID you want to modify: ");
             var bookingId = Console.ReadLine();
@@ -213,8 +237,12 @@ namespace Airport_Ticket_System.Helpers
             {
                 try
                 {
-                    passengerService.ModifyBooking(passengerId, bookingId, newFlightId, newClass);
-                    Console.WriteLine("Booking modified successfully!");
+                    if (bookingId != null && newFlightId != null)
+                    {
+                        passengerService.ModifyBooking(passengerId, bookingId, newFlightId, newClass);
+                        Console.WriteLine("Booking modified successfully!");
+                    }
+                    else throw new Exception("error happend while taking flight||booking IDs");
                 }
                 catch (Exception ex)
                 {

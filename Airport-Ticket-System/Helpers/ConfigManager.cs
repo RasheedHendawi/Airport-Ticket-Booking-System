@@ -10,7 +10,7 @@ namespace Airport_Ticket_System.Helpers
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                .AddJsonFile("appsetting.json", optional: false, reloadOnChange: true);
 
             Configuration = builder.Build();
         }
@@ -19,8 +19,15 @@ namespace Airport_Ticket_System.Helpers
         {
             var username = Configuration["Admin:Username"];
             var password = Configuration["Admin:Password"];
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                throw new InvalidOperationException("Admin credentials are not configured properly.");
+            }
+
             return (username, password);
         }
+
     }
 
 }

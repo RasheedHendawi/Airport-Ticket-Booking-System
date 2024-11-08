@@ -1,17 +1,18 @@
 ﻿using Airport_Ticket_System.Exceptions.BookingExceptions;
+using Airport_Ticket_System.Helpers;
 using Airport_Ticket_System.Interfaces.IRepositories;
 using Airport_Ticket_System.Models;
 
-namespace Airport_Ticket_System.Repositories
+namespace Airport_Ticket_System.RepositoriesHandler
 {
     public class BookingRepository : IBookingRepository
     {
-        private List<Booking> _bookings;
+        private readonly List<Booking> _bookings;
         private readonly string _filePath;
 
-        public BookingRepository()
+        public BookingRepository(string filepath)
         {
-            _filePath = Path.Combine(Directory.GetCurrentDirectory(), "DataStorage", "bookings.csv");
+            _filePath = FilePathHelper.GetDataFilePath(filepath);
             _bookings = LoadBookingsFromFile();
         }
 
@@ -19,15 +20,15 @@ namespace Airport_Ticket_System.Repositories
         private List<Booking> LoadBookingsFromFile()
         {
             if (!File.Exists(_filePath))
-                return new List<Booking>();
+                return [];
 
             return File.ReadAllLines(_filePath)
-                       .Skip(1) 
+                       .Skip(1)
                        .Select(line => CsvToBooking(line))
                        .ToList();
         }
 
-        private Booking CsvToBooking(string csvLine)
+        private static Booking CsvToBooking(string csvLine)
         {
             var values = csvLine.Split(';');
             return new Booking
@@ -37,7 +38,7 @@ namespace Airport_Ticket_System.Repositories
                 FlightId = values[2],
                 BookingDate = DateTime.Parse(values[3]),
                 Class = Enum.Parse<FlightClass>(values[4]),
-                Price = Decimal.Parse(values[5])
+                Price = decimal.Parse(values[5])
             };
         }
 
@@ -61,9 +62,7 @@ namespace Airport_Ticket_System.Repositories
         public Booking GetBookingById(string bookingId)
         {
             var booking = _bookings.FirstOrDefault(b => b.BookingId == bookingId);
-            if (booking == null)
-                throw new BookingNotFoundException(bookingId);
-            return booking;
+            return booking ?? throw new BookingNotFoundException(bookingId);
         }
         public void AddBooking(Booking booking)
         {

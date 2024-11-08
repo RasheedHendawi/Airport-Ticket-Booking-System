@@ -12,6 +12,8 @@ namespace Airport_Ticket_System.Helpers
                     return basePrice + (basePrice * 0.04m);
                 case FlightClass.FirstClass:
                     return basePrice + (basePrice * 0.07m);
+                case FlightClass.Economy:
+                    return basePrice + (basePrice * 0.02m);
                 default:
                     return basePrice;
             }

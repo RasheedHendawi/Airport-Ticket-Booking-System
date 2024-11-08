@@ -3,7 +3,7 @@
     public class BookingNotFoundException : Exception
     {
         public BookingNotFoundException(string bookingId)
-            : base($"Booking with ID {bookingId} was not found.")
+            : base($"Booking with ID {bookingId} not found.")
         {
         }
     }

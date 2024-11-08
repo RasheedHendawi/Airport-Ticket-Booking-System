@@ -3,12 +3,13 @@
   "WorkspaceRootPath": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\Airport-Ticket-System\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AA7103C2-7ABF-4B34-83B6-710F38523BB8}|Airport-Ticket-System.csproj|c:\\users\\rrash\\desktop\\airport-ticket-booking-system\\airport-ticket-system\\utilites\\displayhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA7103C2-7ABF-4B34-83B6-710F38523BB8}|Airport-Ticket-System.csproj|solutionrelative:utilites\\displayhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E258A869-7FF4-4DE6-A991-AD414EC74DBB}|..\\AirportTicketSystem.Tests\\AirportTicketSystem.Tests.csproj|c:\\users\\rrash\\desktop\\airport-ticket-booking-system\\airportticketsystem.tests\\services\\flightservietests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AA7103C2-7ABF-4B34-83B6-710F38523BB8}|Airport-Ticket-System.csproj|c:\\users\\rrash\\desktop\\airport-ticket-booking-system\\airport-ticket-system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA7103C2-7ABF-4B34-83B6-710F38523BB8}|Airport-Ticket-System.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E258A869-7FF4-4DE6-A991-AD414EC74DBB}|..\\AirportTicketSystem.Tests\\AirportTicketSystem.Tests.csproj|c:\\users\\rrash\\desktop\\airport-ticket-booking-system\\airportticketsystem.tests\\helpers\\passengerservicehelpertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E258A869-7FF4-4DE6-A991-AD414EC74DBB}|..\\AirportTicketSystem.Tests\\AirportTicketSystem.Tests.csproj|c:\\users\\rrash\\desktop\\airport-ticket-booking-system\\airportticketsystem.tests\\services\\bookingservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,8 +19,47 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FlightServieTests.cs",
+              "DocumentMoniker": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\AirportTicketSystem.Tests\\Services\\FlightServieTests.cs",
+              "RelativeDocumentMoniker": "..\\AirportTicketSystem.Tests\\Services\\FlightServieTests.cs",
+              "ToolTip": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\AirportTicketSystem.Tests\\Services\\FlightServieTests.cs",
+              "RelativeToolTip": "..\\AirportTicketSystem.Tests\\Services\\FlightServieTests.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAA8wCQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T00:21:20.181Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PassengerServiceHelperTests.cs",
+              "DocumentMoniker": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\AirportTicketSystem.Tests\\Helpers\\PassengerServiceHelperTests.cs",
+              "RelativeDocumentMoniker": "..\\AirportTicketSystem.Tests\\Helpers\\PassengerServiceHelperTests.cs",
+              "ToolTip": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\AirportTicketSystem.Tests\\Helpers\\PassengerServiceHelperTests.cs",
+              "RelativeToolTip": "..\\AirportTicketSystem.Tests\\Helpers\\PassengerServiceHelperTests.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAUwCQAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T00:16:53.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BookingServiceTests.cs",
+              "DocumentMoniker": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\AirportTicketSystem.Tests\\Services\\BookingServiceTests.cs",
+              "RelativeDocumentMoniker": "..\\AirportTicketSystem.Tests\\Services\\BookingServiceTests.cs",
+              "ToolTip": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\AirportTicketSystem.Tests\\Services\\BookingServiceTests.cs",
+              "RelativeToolTip": "..\\AirportTicketSystem.Tests\\Services\\BookingServiceTests.cs",
+              "ViewState": "AgIAAE8BAAAAAAAAAAAAAFABAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T00:16:08.276Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -27,32 +67,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DisplayHelper.cs",
-              "DocumentMoniker": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\Airport-Ticket-System\\Utilites\\DisplayHelper.cs",
-              "RelativeDocumentMoniker": "Utilites\\DisplayHelper.cs",
-              "ToolTip": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\Airport-Ticket-System\\Utilites\\DisplayHelper.cs",
-              "RelativeToolTip": "Utilites\\DisplayHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-20T10:44:18.78Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\Airport-Ticket-System\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\rrash\\Desktop\\Airport-Ticket-Booking-System\\Airport-Ticket-System\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-13T02:38:26.488Z",
-              "EditorCaption": ""
             }
           ]
         }

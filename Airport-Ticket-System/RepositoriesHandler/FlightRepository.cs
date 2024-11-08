@@ -1,18 +1,18 @@
-﻿using Airport_Ticket_System.Exceptions;
-using Airport_Ticket_System.Exceptions.FlightExceptions;
+﻿using Airport_Ticket_System.Exceptions.FlightExceptions;
+using Airport_Ticket_System.Helpers;
 using Airport_Ticket_System.Interfaces.IRepositories;
 using Airport_Ticket_System.Models;
 
-namespace Airport_Ticket_System.Repositories
+namespace Airport_Ticket_System.RepositoriesHandler
 {
     public class FlightRepository : IFlightRepository
     {
         private readonly List<Flight> _flights;
         private readonly string _filePath;
 
-        public FlightRepository()
+        public FlightRepository(string filePath)
         {
-            _filePath = Path.Combine(Directory.GetCurrentDirectory(), "DataStorage", "flights.csv");
+            _filePath = FilePathHelper.GetDataFilePath(filePath);
             _flights = LoadFlightsFromFile();
         }
 
@@ -20,7 +20,7 @@ namespace Airport_Ticket_System.Repositories
         private List<Flight> LoadFlightsFromFile()
         {
             if (!File.Exists(_filePath))
-                return new List<Flight>();
+                return [];
 
             return File.ReadAllLines(_filePath)
                        .Skip(1)
@@ -29,7 +29,7 @@ namespace Airport_Ticket_System.Repositories
         }
 
 
-        private Flight CsvToFlight(string csvLine)
+        private static Flight CsvToFlight(string csvLine)
         {
             var values = csvLine.Split(';');
             return new Flight
@@ -51,7 +51,7 @@ namespace Airport_Ticket_System.Repositories
                 "FlightId;DepartureCountry;DestinationCountry;DepartureDate;DepartureAirport;ArrivalAirport;Price"
             };
 
-            lines.AddRange(_flights.Select(f => $"{f.FlightId};{f.DepartureCountry};{f.DestinationCountry};{f.DepartureDate};{f.DepartureAirport};{f.ArrivalAirport};{f.Price}"));  
+            lines.AddRange(_flights.Select(f => $"{f.FlightId};{f.DepartureCountry};{f.DestinationCountry};{f.DepartureDate};{f.DepartureAirport};{f.ArrivalAirport};{f.Price}"));
             File.WriteAllLines(_filePath, lines);
         }
 
@@ -69,7 +69,7 @@ namespace Airport_Ticket_System.Repositories
         public void AddFlight(Flight flight)
         {
             _flights.Add(flight);
-            SaveFlightsToFile(); 
+            SaveFlightsToFile();
         }
         public void AddFlights(List<Flight> flight)
         {

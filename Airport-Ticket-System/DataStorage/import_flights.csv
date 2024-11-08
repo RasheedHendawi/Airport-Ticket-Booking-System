@@ -1,0 +1,6 @@
+FlightId;DepartureCountry;DestinationCountry;DepartureDate;DepartureAirport;ArrivalAirport;Price
+FL006;Japan;South Korea;10/11/2025 10:00:00 AM;Tokyo Narita;Seoul Incheon;300.00
+FL007;Brazil;Argentina;1/11/2025 02:00:00 PM;São Paulo Guarulhos;Buenos Aires Ezeiza;280.00
+FL008;India;United Arab Emirates;2/11/2025 11:00:00 PM;Indira Gandhi;Dubai International;320.00
+FL009;South Africa;Egypt;3/11/2025 06:00:00 AM;Cape Town International;Cairo International;360.00
+FL010;Mexico;USA;4/11/2025 09:00:00 AM;Mexico City International;LAX;330.00

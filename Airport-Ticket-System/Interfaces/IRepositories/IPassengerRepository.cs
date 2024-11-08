@@ -2,7 +2,7 @@
 
 namespace Airport_Ticket_System.Interfaces.IRepositories
 {
-    internal interface IPassengerRepository
+    public interface IPassengerRepository
     {
         IEnumerable<Passenger> GetAllPassengers();
         Passenger GetPassengerById(string passengerId);

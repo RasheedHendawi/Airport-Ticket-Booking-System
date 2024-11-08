@@ -1,35 +1,37 @@
-﻿using Airport_Ticket_System.Exceptions;
+﻿using Airport_Ticket_System.Models;
 using Airport_Ticket_System.Exceptions.PassengerExceptions;
+using Airport_Ticket_System.Helpers;
 using Airport_Ticket_System.Interfaces.IRepositories;
-using Airport_Ticket_System.Models;
 
-namespace Airport_Ticket_System.Repositories
+namespace Airport_Ticket_System.RepositoriesHandler
 {
     public class PassengerRepository : IPassengerRepository
     {
-        private List<Passenger> _passengers;
+        private readonly List<Passenger> _passengers;
         private readonly string _filePath;
 
-        public PassengerRepository()
+        public PassengerRepository(string filePath)
         {
-            _filePath = Path.Combine(Directory.GetCurrentDirectory(), "DataStorage", "passengers.csv");
+            _filePath = FilePathHelper.GetDataFilePath(filePath);
             _passengers = LoadPassengersFromFile();
         }
-
 
         private List<Passenger> LoadPassengersFromFile()
         {
             if (!File.Exists(_filePath))
-                return new List<Passenger>();
+                return [];
 
-            return File.ReadAllLines(_filePath)
-                       .Skip(1) 
-                       .Select(line => CsvToPassenger(line))
-                       .ToList();
+            using (var fileStream = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var reader = new StreamReader(fileStream))
+            {
+                var lines = reader.ReadToEnd().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                return lines.Skip(1)
+                            .Select(CsvToPassenger)
+                            .ToList();
+            }
         }
 
-
-        private Passenger CsvToPassenger(string csvLine)
+        private static Passenger CsvToPassenger(string csvLine)
         {
             var values = csvLine.Split(';');
             return new Passenger
@@ -42,16 +44,17 @@ namespace Airport_Ticket_System.Repositories
             };
         }
 
-
         private void SavePassengersToFile()
         {
-            var lines = new List<string>
-        {
-            "PassengerId;FirstName;LastName;Email;PhoneNumber"
-        };
-
-            lines.AddRange(_passengers.Select(p => $"{p.PassengerId};{p.FirstName};{p.LastName};{p.Email};{p.PhoneNumber}"));
-            File.WriteAllLines(_filePath, lines);
+            using (var fileStream = new FileStream(_filePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+            using (var writer = new StreamWriter(fileStream))
+            {
+                writer.WriteLine("PassengerId;FirstName;LastName;Email;PhoneNumber");
+                foreach (var passenger in _passengers)
+                {
+                    writer.WriteLine($"{passenger.PassengerId};{passenger.FirstName};{passenger.LastName};{passenger.Email};{passenger.PhoneNumber}");
+                }
+            }
         }
 
         public IEnumerable<Passenger> GetAllPassengers()
@@ -62,15 +65,13 @@ namespace Airport_Ticket_System.Repositories
         public Passenger GetPassengerById(string passengerId)
         {
             var passenger = _passengers.FirstOrDefault(p => p.PassengerId == passengerId);
-            if (passenger == null)
-                throw new PassengerNotFoundException(passengerId);
-            return passenger;
+            return passenger ?? throw new PassengerNotFoundException(passengerId);
         }
 
         public void AddPassenger(Passenger passenger)
         {
             _passengers.Add(passenger);
-            SavePassengersToFile(); 
+            SavePassengersToFile();
         }
 
         public void RemovePassenger(string passengerId)
@@ -87,5 +88,4 @@ namespace Airport_Ticket_System.Repositories
             SavePassengersToFile();
         }
     }
-
 }
